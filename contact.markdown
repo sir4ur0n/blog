@@ -2,5 +2,4 @@
 title: Contact
 ---
 
-I live in a small hut in the mountains of Kumano Kodō on Kii Hantō and would not
-like to be contacted.
+My main public contact point is [Twitter](https://twitter.com/Sir4ur0n), feel free to send a DM if you want to get in touch!
