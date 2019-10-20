@@ -7,17 +7,19 @@ context: This is part of a series on effect handling in Haskell using Polysemy
 
 Many Haskellers seem to have a love-hate relationship with `IO`.
 
-Love, because unlike most languages, Haskell programs "tag" functions with side effects using `IO`, leading to programs that are easier to understand, and forcing developers to separate concerns between pure and impure functions.
+Love, because unlike most languages, Haskell programs "tag" functions with effects using `IO`, leading to programs that are easier to understand, and forcing developers to separate concerns between pure and impure functions.
 
-Hate, because `IO` is binary: either a function has side effects, or it has not, but you don't get much more information from `IO`. Whether an `IO` function writes to a file or launches a nuclear missile, you can't tell by reading its type.
+Hate, because `IO` is binary: either a function has effects, or it has not, but you don't get much more information from `IO`. Whether an `IO` function writes to a file or launches a nuclear missile, you can't tell by reading its type.
 
-The thing is, Haskell developers love to carry as much information (and constraints) as possible in types. Everything the compiler checks, we don't have to check them anymore (either through thinking or tests). So we want a finer granularity to identify and separate side effects in the type system. 
+The thing is, Haskell developers love to carry as much information (and constraints) as possible in types. Everything the compiler checks, we don't have to check them anymore (either through thinking or tests). So we want a finer granularity to identify and separate effects in the type system. 
+
+Don't get me wrong, effects are positive. I challenge you to write a useful program without effect. The point is to keep them in line and rely on the compiler to check no unintended effect "leaks" throughout the program. 
 
 Various tactics have emerged through the years to carry more information about those effects: Monad transformers, MTL, `freer-simple`, `fused-effects`, etc.
 
 And right now the new kid on the block is [Polysemy](https://hackage.haskell.org/package/polysemy).
 
-As the readme states, Polysemy requires much less boilerplate and has a zero-cost performance impact than other solutions. An additional benefit I love - surprisingly it is not mentioned in the readme - is it becomes a lot easier to test side effects!
+As the readme states, Polysemy requires much less boilerplate and has a zero-cost performance impact than other solutions. An additional benefit I love - surprisingly it is not mentioned in the readme - is it becomes a lot easier to test effects!
 
 Let's see how to get started with this new toy!
 
