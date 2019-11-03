@@ -9,7 +9,7 @@ Many Haskellers seem to have a love-hate relationship with `IO`.
 
 Love, because unlike most languages, Haskell programs "tag" functions with effects using `IO`, leading to programs that are easier to understand, and forcing developers to separate concerns between pure and impure functions.
 
-Hate, because `IO` is binary: either a function has effects, or it has not, but you don't get much more information from `IO`. Whether an `IO` function writes to a file or launches a nuclear missile, you can't tell by reading its type.
+Hate, because `IO` is binary: either a function has effects, or it has not, but you do not get much more information from `IO`. Whether an `IO` function writes to a file or launches a nuclear missile, you cannot tell by reading its type.
 
 The thing is, Haskell developers love to carry as much information (and constraints) as possible in types. Everything the compiler checks, we don't have to check them anymore (either through thinking or tests). So we want a finer granularity to identify and separate effects in the type system. 
 
@@ -64,4 +64,4 @@ Examples:
 * Log to `stdout` or to a log file
 * Read from the environment variables or a property file
 
-Now that we better grasp the idea of Polysemy effects, let's start writing code! Head to [my next blog post](2019-10-11-polysemy-first-example.html) for a first, simple example.
+Now that we better grasp the idea of Polysemy effects, let's start writing code! Head to [my next blog post](polysemy-first-example.html) for a first, simple example.
