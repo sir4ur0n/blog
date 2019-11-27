@@ -26,7 +26,7 @@ jobs:
       - run: cabal update
       - run: cabal build --only-dependencies
       - run: cabal build
-      - run: cabal exec site build
+      - run: cabal exec blog build
       - name: 'Run peaceiris/actions-gh-pages@v2.5.0: deploy to Github pages'
         uses: peaceiris/actions-gh-pages@v2.5.0
         env:
