@@ -3,9 +3,43 @@ title: Polysemy - Part I - Introduction
 context: This is part of a series on effect handling in Haskell using Polysemy
 ---
 
-## IO vs. Effects
+## Effect vs Side effect
+Before I took on functional programming, I never made a difference between "effect" and "side effect". Interestingly, there are many [resources](https://en.wikipedia.org/wiki/Side_effect_(computer_science)) on side effects but few on effects. So let's start with a few definitions:
 
-Many Haskellers seem to have a love-hate relationship with `IO`.
+* A function is a piece of software requiring 0, 1 or several parameters, and returning a value.
+* A function has an effect when it has an observable interaction with the world outside of that function. Examples of effects are I/O (disk, network, keyboard, screen...), global variable or parameter mutation, program interruption, etc.
+* A function has a side effect when it has an effect that was not described by the function - and thus, the caller of the function is unaware the program now has this effect!
+
+Example of function having a side effect:
+```java
+Integer foo(String input) {
+    System.out.println("I am inside foo");
+    return 42;
+}
+```
+The caller is well aware this function takes a `String` as input and returns an `Integer`, but it has no idea the function will print something to the standard output without looking at its implementation. Requiring every developer to read through the implementation of each function, and each sub-function called by each function, and so on, obviously doesn't scale to large programs. This leads to buggy, brittle programs that everybody fears maintaining.
+
+Example of function having an effect which is not a side effect:
+```java
+Integer foo(String input) throws CannotDoThatException {
+    // ...
+}
+```
+This function has an effect (program interruption through `CannotDoThatException`) which is definitely not hidden. The author knows very well this function can abruptly stop (and why) without looking at its implementation. This is much safer, and scales much better to programs.
+
+Effects are awesome. A program is merely something that converts electricity into effects, be it a calculation result, a character displayed on your screen or your voice being recorded by a microphone.
+
+I challenge you to write a useful program without effect.
+
+Side effects, on the other hand, are evil. They creep throughout programs, the author or reader unaware of them, and may or may not have unintended consequences whenever they run.
+
+And suddenly one can see why so many developers (myself included) confuse effects with side effects: most programming languages confuse them, too! Checked exceptions aside, Java treats all effects as side effects. Most of us have learnt and practiced unsafe programming for years because all of our effects (useful and intentional!) are side effects (hidden, untraceable, creeping).
+
+And now the good news: some languages fully support and embrace effects, but make side effects impossible, resulting in safer programs for free! As an example, in Haskell, all functions having effects don't return a value of type `Foo`, but of type `IO Foo`, meaning "This function ultimately returns a `Foo` but has effects along the way". And all functions calling it also have to change their type from `Bar` to `IO Bar` to track the propagation of effects.
+
+## IO vs. Effect
+
+Many Haskellers have a love-hate relationship with `IO`.
 
 Love, because unlike most languages, Haskell programs "tag" functions with effects using `IO`, leading to programs that are easier to understand, and forcing developers to separate concerns between pure and impure functions.
 
@@ -13,15 +47,13 @@ Hate, because `IO` is binary: either a function has effects, or it has not, but 
 
 The thing is, Haskell developers love to carry as much information (and constraints) as possible in types. Everything the compiler checks, we don't have to check them anymore (either through thinking or tests). So we want a finer granularity to identify and separate effects in the type system. 
 
-Don't get me wrong, effects are positive. I challenge you to write a useful program without effect. The point is to keep them in line and rely on the compiler to check no unintended effect "leaks" throughout the program. 
-
 Various tactics have emerged through the years to carry more information about those effects: Monad transformers, MTL, `freer-simple`, `fused-effects`, etc.
 
 And right now the new kid on the block is [Polysemy](https://hackage.haskell.org/package/polysemy).
 
-As the readme states, Polysemy requires much less boilerplate and has a zero-cost performance impact than other solutions. An additional benefit I love - surprisingly it is not mentioned in the readme - is it becomes a lot easier to test effects!
+As the readme states, Polysemy requires much less boilerplate than other solutions, and has a zero-cost performance (starting with GHC 8.10). An additional benefit I love - surprisingly it is not mentioned in the readme - is it becomes a lot easier to mock effects, and thus test functions with effects!
 
-Let's see how to get started with this new toy!
+Let's see how to get started with this new toy.
 
 ## Polysemy basics
 As [I discussed in an issue](https://github.com/polysemy-research/polysemy/issues/234) I find the first Polysemy example quite complex and lacking explanations, which slowed me down in understanding how to make things work. I feel like code examples have more impact after a high level explanation of concepts. So here we go!
