@@ -49,12 +49,12 @@ makeSem ''Log
 
 This is pretty dense already, let's analyze bit by bit what's going on!
 
-`data Log m a` is our effect. This is the type that will appear in all our function signatures.
-* `Log` is the effect name. Better pick a name that's descriptive of the effect!
+`data Log m a` is our effect. 
+* `Log` is the effect name. This is the part that will appear in all our function signatures. Better pick a name that's descriptive (and ideally not verbose) of the effect!
 * `m` must always be there (you can guess the `m` stands for `Monad` but you don't really need to know what it's used for)
 * `()` is the return type of the action. A logging action returns nothing, so we stick to Unit (`()`)
 
-`LogInfo :: String -> Log m ()` is a possible "action" that has the `Log` effect. As you may have guessed, it is an action that takes a `String` to log, and will log it! Note we can have several actions under the same effect, but let's start with one.
+`LogInfo :: String -> Log m ()` is a possible **action** that has the `Log` effect. As you may have guessed, it is an action that takes a `String` to log, and will log it! Note we can have several actions under the same effect, but let's start with one.
 
 `makeSem ''Log` uses Template Haskell to create the `logInfo` function (same name as the action, but with the first letter changed to lowercase). We do not _technically_ need this, but it saves us writing uninteresting boilerplate, so let's stick with it.
 
@@ -97,7 +97,7 @@ The main changes are:
 * the return type `Sem r Integer` which you can read as "A Polysemy monad with the list of effects `r` and which returns an `Integer`". And the only thing we know (and we need to know) is that `r` has the `Log` effect. It may very well have a thousand other effects, or none, we don't care in this business code. We declare the **needed** effects, not the **exhaustive list** of effects
 * the use of `logInfo` (remember? It was generated thanks to `makeSem ''Log` in the effect declaration) to actually log stuff
 
-This piece of code is much better! Now our business code better expresses its effects in the type signature (it logs, and cannot do anything else!), no longer has hardcoded the implementation (`putStrLn`), and we haven't added any complexity to our code.
+This piece of code is much better. Now our business code better expresses its effects in the type signature (it logs, and cannot do anything else!), no longer has hardcoded the implementation (`putStrLn`), and we haven't added any complexity to our code.
 
 Now you might wonder "This is great, but at some point, somebody's gotta do the actual logging with `putStrLn`!".
 
@@ -125,7 +125,7 @@ logToIO = interpret (\(LogInfo stringToLog) -> embed $ putStrLn stringToLog)
 There's a lot going on! Don't panic, as impressive as it may look the first time, you will soon get used to it.
 
 * the `Member (Embed IO) r` constraint means `r` must have the ability to do `IO`. Ideally we would write `Member IO r` but since `IO` is not a Polysemy effect, we need to wrap it as an effect thanks to `Embed`. Note we require the `IO` effect because we want our main application to log using `putStrLn`. In our tests, we will write another interpreter with a pure function, thus we will not need to require the `IO` effect
-* the `Sem (Log ': r) a -> Sem r a` type signature can be read as "I take a `Sem` monad which has any effect **and the `Log` effect**, and return the same `Sem` monad without that `Log` effect", effectively meaning we are interpreting (destroying) the `Log` effect. Note, in more recent versions of `Polysemy` (unfortunately not yet available on Stackage), this type signature can be replaced with `InterpreterFor Log r`, which makes the function intention even clearer!
+* the `Sem (Log ': r) a -> Sem r a` type signature can be read as "I take a `Sem` monad which has any effect **and the `Log` effect**, and return the same `Sem` monad without that `Log` effect", effectively meaning we are interpreting (destroying/consuming) the `Log` effect. Note, in more recent versions of `Polysemy` (unfortunately not yet available on Stackage), this type signature can be replaced with `InterpreterFor Log r`, which makes the function intention even clearer!
 * note that the implementation does not explicitly mention the input argument (called [pointfree style](https://wiki.haskell.org/Pointfree)), this is how interpreters usually look
 * `interpret` means what follows will be an interpreter
 * since all we know about `r` is that it has the `Log` effect, we need to interpret only its actions (`LogInfo`)
@@ -148,7 +148,7 @@ main = do
 
 Well, that was simple.
 
-That's it, our code was successfully migrated from monolithic effect `IO` to fine-grained `Log` effect! The additional noise is negligible and the benefit is already interesting, but the benefits increase tenfold in "real" applications with several effects, several actions per effect, several business functions calling each other, and tests.
+That's it, our code was successfully migrated from monolithic effect `IO` to fine-grained `Log` effect! The additional noise is negligible and the benefit is already interesting, but the benefits increase tenfold in "real" applications with several effects, several actions per effect, several business functions calling each other, reinterpretations, and tests.
 
 In the next post, we will see how to write tests for business functions with Polysemy effects. Stay tuned!
 
