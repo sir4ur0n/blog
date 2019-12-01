@@ -20,3 +20,6 @@ _site/
 
 *.iml
 *.idea/
+
+### Nix
+result

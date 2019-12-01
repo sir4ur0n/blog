@@ -1,11 +1,17 @@
 # Sir4ur0n's blog
 
-## Build
+## Prerequisite
+You need Nix in order to build the website generator
+```
+nix-build
+```
+
+## Build the website
 ```bash
-stack exec blog build
+result/bin/blog build
 ```
 
 ## Workflow during writing
 ```bash
-stack exec blog clean && stack exec blog watch
+result/bin/blog clean && result/bin/blog watch
 ```
