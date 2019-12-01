@@ -3,15 +3,15 @@
 ## Prerequisite
 You need Nix in order to build the website generator
 ```
-nix-build
+$ nix-build
 ```
 
 ## Build the website
 ```bash
-result/bin/blog build
+$ result/bin/blog build
 ```
 
 ## Workflow during writing
 ```bash
-result/bin/blog clean && result/bin/blog watch
+$ result/bin/blog clean && result/bin/blog watch
 ```
