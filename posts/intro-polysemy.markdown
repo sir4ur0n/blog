@@ -1,6 +1,7 @@
 ---
 title: Polysemy - Part I - Introduction
 context: This is part of a series on effect handling in Haskell using Polysemy
+date: 2019-11-30
 ---
 
 ## Effect vs Side effect
