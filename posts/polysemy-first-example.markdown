@@ -150,8 +150,6 @@ main = do
   putStrLn $ "The business result is " <> show result
 ```
 
-Well, that was simple.
-
 That's it, our code was successfully migrated from monolithic effect `IO` to fine-grained `Log` effect! The additional noise is negligible and the benefit is already interesting, but the benefits increase tenfold in "real" applications with several effects, several actions per effect, several business functions calling each other, reinterpretations, and tests.
 
 In the next post, we will see how to write tests for business functions with Polysemy effects. Stay tuned!
