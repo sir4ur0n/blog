@@ -6,6 +6,7 @@ date: 2019-11-30
 
 ## Setup
 Let's setup our project as documented in [Polysemy readme](https://hackage.haskell.org/package/polysemy) beforehand (instructions are for Stack projects but I'm sure you will easily find the Cabal/Nix equivalent):
+
 * Add `polysemy` and `polysemy-plugin` to our `package.yaml` `dependencies`
 * Add the following to `ghc-options`:
 ```yaml
@@ -51,6 +52,7 @@ makeSem ''Log
 This is pretty dense already, let's analyze bit by bit what's going on!
 
 `data Log m a` is our effect. 
+
 * `Log` is the effect name. This is the part that will appear in all our function signatures. Better pick a name that's descriptive (and ideally not verbose) of the effect!
 * `m` must always be there (you can guess the `m` stands for `Monad` but you don't really need to know what it's used for)
 * `()` is the return type of the action. A logging action returns nothing, so we stick to Unit (`()`)
@@ -94,6 +96,7 @@ myBusinessFunction m n = do
 ```
 
 The main changes are:
+
 * the constraint `Member Log r` which tells that `r` must have **at least** the `Log` effect (because we will use it in our implementation)
 * the return type `Sem r Integer` which you can read as "A Polysemy monad with the list of effects `r` and which returns an `Integer`". And the only thing we know (and we need to know) is that `r` has the `Log` effect. It may very well have a thousand other effects, or none, we don't care in this business code. We declare the **needed** effects, not the **exhaustive list** of effects
 * the use of `logInfo` (remember? It was generated thanks to `makeSem ''Log` in the effect declaration) to actually log stuff
