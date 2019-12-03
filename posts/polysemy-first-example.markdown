@@ -11,8 +11,6 @@ Let's setup our project as documented in [Polysemy readme](https://hackage.haske
 * Add the following to `ghc-options`:
 ```yaml
 - -fplugin=Polysemy.Plugin
-- -flate-specialise
-- -fspecialise-aggressively
 ``` 
 * Add the following to `default-extensions` (we also add `TemplateHaskell` because we use it to reduce boilerplate):
 ```yaml
@@ -61,14 +59,22 @@ This is pretty dense already, let's analyze bit by bit what's going on!
 
 `makeSem ''Log` uses Template Haskell to create the `logInfo` function (same name as the action, but with the first letter changed to lowercase). We do not _technically_ need this, but it saves us writing uninteresting boilerplate, so let's stick with it.
 
-In case you are curious, let's check the type of this `logInfo` function:
+In case you are curious, let's check the **type** of this `logInfo` function:
 ```
-> :t logInfo
+> :type logInfo
 
 logInfo :: (IfStuck (IndexOf r (Found r Log)) (IfStuck r (TypeError ...) (Pure (TypeError ...))) NoErrorFcf, Find r Log, IndexOf r (Found r Log) ~ Log) => String -> Sem r ()
 ```
 
-You know what? Let's pretend we never saw that. We don't actually need to understand this to use it.
+You know what? Let's pretend we never saw that. We don't actually need to understand this (I don't).
+
+What if we display **information** about this function instead?
+```
+> :info logInfo
+
+MemberWithError Log r => Text -> Sem r ()
+```
+which reads as "Give me a `Text` and I'll give you a `Sem` monad with **at least** the `Log` effect".
 
 And that's it! We have declared our logging effect. Remember, with effects, we split effect declaration and effect interpretation. This piece of code in no way explains **how** one should log. That is the whole point!
 
