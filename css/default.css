@@ -1,7 +1,14 @@
 @import "syntax-highlighting.css";
 
+/* code :not(pre) {color: red} */
 /* Override theme from https://github.com/tejasbubane/hakyll-css/tree/master/css */
-pre.sourceCode { margin: 10px; }
+pre.sourceCode {
+    margin: 10px;
+}
+
+div.sourceCode {
+    border-radius: 5px;
+}
 /* End of override */
 
 body {
