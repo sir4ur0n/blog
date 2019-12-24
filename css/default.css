@@ -1,5 +1,9 @@
 @import "syntax-highlighting.css";
 
+/* Override theme from https://github.com/tejasbubane/hakyll-css/tree/master/css */
+pre.sourceCode { margin: 10px; }
+/* End of override */
+
 body {
   color: black;
   font-size: 1rem;
