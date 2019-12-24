@@ -84,7 +84,8 @@ Now that we have created our logging effect, let's use it in our business code! 
 ```haskell
 myBusinessFunction :: Integer -> Integer -> IO Integer
 myBusinessFunction m n = do
-  putStrLn $ "myBusinessFunction was called with parameters " <> show m <> " and " <> show n
+  putStrLn $ "myBusinessFunction was called with parameters " <> show m <> 
+             " and " <> show n
   let result = m + n
   putStrLn $ "myBusinessFunction result is " <> show result
   return result
@@ -95,7 +96,8 @@ myBusinessFunction m n = do
 ```haskell
 myBusinessFunction :: Member Log r => Integer -> Integer -> Sem r Integer
 myBusinessFunction m n = do
-  logInfo $ "myBusinessFunction was called with parameters " <> show m <> " and " <> show n
+  logInfo $ "myBusinessFunction was called with parameters " <> show m <> 
+            " and " <> show n
   let result = m + n
   logInfo $ "myBusinessFunction result is " <> show result
   return result
@@ -178,7 +180,8 @@ main = do
 
 myBusinessFunction :: Member Log r => Integer -> Integer -> Sem r Integer
 myBusinessFunction m n = do
-  logInfo $ "myBusinessFunction was called with parameters " <> show m <> " and " <> show n
+  logInfo $ "myBusinessFunction was called with parameters " <> show m <> 
+            " and " <> show n
   let result = m + n
   logInfo $ "myBusinessFunction result is " <> show result
   return result
