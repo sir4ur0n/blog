@@ -1,7 +1,7 @@
 ---
 title: Polysemy - Part III - Tests
 context: This is part of a series on effect handling in Haskell using Polysemy
-date: 2020-104-17
+date: 2020-04-17
 ---
 
 Note: This post uses HUnit for unit tests and QuickCheck for property based tests.
@@ -142,3 +142,4 @@ test_associative = \a b c ->
    in
     last logsAB_then_C == last logsA_then_BC && resultAB_then_C == resultA_then_BC
 ```
+
