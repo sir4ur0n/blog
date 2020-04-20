@@ -183,6 +183,8 @@ myBusinessFunction amount = do
 
 This function reads the `MINIMUM_AMOUNT` configuration setting, or uses `500` as default value, then checks that the passed value is greater than or equal to the minimum amount.
 
+Note: the double `fmap` may look weird, this is because we want to convert the resulting `String` to an `Int` but there are 2 layers to map over: `IO` and `Maybe`.
+
 Again, the business code is not concerned with **how** the configuration is retrieved. Is it from an environment variable? A file? A cache? A hardcoded value? Or a combination of those? This decision is up to the interpreter!
 
 ### The interpreters
