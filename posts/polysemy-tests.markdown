@@ -96,7 +96,7 @@ test_1and2is3 = TestCase $
 ### Step 3: Test effects too
 Rather than silencing those logs, maybe logging is part of our requirements. In such case, we should actually check that the function logs correctly!
 
-Let's replace our silencing interpreter with another one, that records all logs, so that we can check exactly what was logged. We will rely on another pre-existing Polysemy effect, namely `Polysemy.State`, which is the Polysemy equivalent of `State` or `StateT`:
+Let's replace our silencing interpreter with another one, that records all logs, so that we can check exactly what was logged. We will rely on another pre-existing Polysemy effect, namely `Polysemy.Writer`, which is the Polysemy equivalent of `Writer` or `WriterT`:
 
 ```haskell
 import Polysemy
@@ -111,13 +111,14 @@ test_1and2is3 = TestCase $
   let (logs, result) = run . runWriter . logToRecord $ myBusinessFunction 1 2
   in do
       result @?= 3
-      logs @?= ["myBusinessFunction was called with parameters 1 and 2", "myBusinessFunction result is 3"]
+      logs @?= [ "myBusinessFunction was called with parameters 1 and 2"
+               , "myBusinessFunction result is 3" ]
 ```
 
 So what's going on here?
 
-1. `logToRecord` interprets the `Log` effect in terms of `Writer [String]`, i.e. we record all the logged lines as a list of strings
-2. We run this `Writer` effect using `runState` (this will aggregate all recorded logs thanks to the `Monoid` constraint, using list appending)
+1. `logToRecord` interprets the `Log` effect in terms of `Writer [String]`, i.e. we record all the logged lines as a list of strings (using `tell` from `Polysemy.Writer` to add logs)
+2. We run this `Writer` effect using `runWriter` (this will aggregate all recorded logs thanks to the `Monoid` constraint, using list appending)
 3. We can now assert both on the business result `3` and on the logged lines
 
 That's it! We have successfully removed the `IO` effect, our tests are pure, yet we can fully assert on both the business results and the effects!
@@ -211,7 +212,7 @@ And now a couple of unit tests showing how to use it:
 ```haskell
 import Test.HUnit
 
-test_defaultMinimumAmount_under = TestCase $
+test_defaultMinimumAmount_lower = TestCase $
   let 
     mockLookupEnv _ = Nothing
     result = run . confToMock mockLookupEnv $ myBusinessFunction 400
