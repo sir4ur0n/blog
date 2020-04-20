@@ -162,30 +162,4 @@ That's it, our code was successfully migrated from monolithic effect `IO` to fin
 
 In [my next blog post](polysemy-tests.html), I explain how to write tests for business functions with Polysemy effects.
 
-Full code:
-```haskell
-import Polysemy
-
-data Log m a where
-  LogInfo :: String -> Log m ()
-
-makeSem ''Log
-
-main :: IO ()
-main = do
-  m <- readLn :: IO Integer
-  n <- readLn :: IO Integer
-  result <- runM . logToIO $ myBusinessFunction m n
-  putStrLn $ "The business result is " <> show result
-
-myBusinessFunction :: Member Log r => Integer -> Integer -> Sem r Integer
-myBusinessFunction m n = do
-  logInfo $ "myBusinessFunction was called with parameters " <> show m <> 
-            " and " <> show n
-  let result = m + n
-  logInfo $ "myBusinessFunction result is " <> show result
-  return result
-
-logToIO :: Member (Embed IO) r => Sem (Log ': r) a -> Sem r a
-logToIO = interpret (\(LogInfo stringToLog) -> embed $ putStrLn stringToLog)
-```
+You can find the full code example on [my Github repo](https://github.com/Sir4ur0n/blog/tree/master/code-examples/src/PolysemyFirstExample).

@@ -152,6 +152,8 @@ This first example showed how to change the interpreter to mock/record the effec
 
 I think it's interesting to showcase another example where the effect action has a return value other than `()`.
 
+You can find the full code example on [my Github repo](https://github.com/Sir4ur0n/blog/tree/master/code-examples/src/PolysemyTestsLogging).
+
 ## Intermediary example: environment variables
 Let's consider the use case of enviroment variable access.
 
@@ -231,6 +233,8 @@ test_minimumAmount_greater = TestCase $
 ```
 
 As you can see, each test provides the mocking function `mockLookupEnv` which is then injected in the interpreter.
+
+You can find the full code example on [my Github repo](https://github.com/Sir4ur0n/blog/tree/master/code-examples/src/PolysemyTestsConfiguration).
 
 ## Conclusion
 As shown in this post, testing (by mocking) is nice and inexpensive in Haskell with an effect framework like Polysemy.
