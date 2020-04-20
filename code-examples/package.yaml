@@ -1,0 +1,50 @@
+name:                code-examples
+version:             1.0.0.0
+github:              "Sir4ur0n/blog"
+license:             BSD3
+author:              "Julien Debon"
+maintainer:          "julien.debon@decathlon.com"
+copyright:           "WTFPL"
+
+description:         Code examples of my blog <https://sir4ur0n.github.io>
+
+default-extensions:
+  - DataKinds
+  - FlexibleContexts
+  - GADTs
+  - LambdaCase
+  - PolyKinds
+  - RankNTypes
+  - ScopedTypeVariables
+  - TemplateHaskell
+  - TypeApplications
+  - TypeOperators
+  - TypeFamilies
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  # Some additional compiler warnings from https://medium.com/mercury-bank/enable-all-the-warnings-a0517bc081c3
+  - -Wincomplete-uni-patterns
+  - -Wincomplete-record-updates
+  - -Wmissing-home-modules
+  - -Widentities
+  - -Wredundant-constraints
+  # Parallel by default
+  - -j
+  # Don't optimize by default (faster build time)
+  - -O0
+  # Polysemy for algebraic effects
+  - -fplugin=Polysemy.Plugin
+  - -flate-specialise
+  - -fspecialise-aggressively
+
+dependencies:
+  - base
+  - polysemy
+  - polysemy-plugin
+  - HUnit
+  - QuickCheck
+
+library:
+  source-dirs: src

@@ -1,0 +1,50 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.32.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: a67c4d7261fb8310c0a0e4f017e58193ff967fbf31590cbf78103826fb1ce981
+
+name:           code-examples
+version:        1.0.0.0
+description:    Code examples of my blog <https://sir4ur0n.github.io>
+homepage:       https://github.com/Sir4ur0n/blog#readme
+bug-reports:    https://github.com/Sir4ur0n/blog/issues
+author:         Julien Debon
+maintainer:     julien.debon@decathlon.com
+copyright:      WTFPL
+license:        BSD3
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/Sir4ur0n/blog
+
+library
+  exposed-modules:
+      PolysemyFirstExample.Business
+      PolysemyFirstExample.Lib
+      PolysemyFirstExample.Logging
+      PolysemyTestsConfiguration.Business
+      PolysemyTestsConfiguration.BusinessSpec
+      PolysemyTestsConfiguration.Configuration
+      PolysemyTestsConfiguration.ConfigurationSpec
+      PolysemyTestsLogging.Business
+      PolysemyTestsLogging.BusinessSpec
+      PolysemyTestsLogging.Lib
+      PolysemyTestsLogging.Logging
+      PolysemyTestsLogging.LoggingSpec
+  other-modules:
+      Paths_code_examples
+  hs-source-dirs:
+      src
+  default-extensions: DataKinds FlexibleContexts GADTs LambdaCase PolyKinds RankNTypes ScopedTypeVariables TemplateHaskell TypeApplications TypeOperators TypeFamilies
+  ghc-options: -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmissing-home-modules -Widentities -Wredundant-constraints -j -O0 -fplugin=Polysemy.Plugin -flate-specialise -fspecialise-aggressively
+  build-depends:
+      HUnit
+    , QuickCheck
+    , base
+    , polysemy
+    , polysemy-plugin
+  default-language: Haskell2010
