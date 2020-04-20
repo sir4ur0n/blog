@@ -1,4 +1,4 @@
-# Sir4ur0n's blog
+# Julien Debon's blog
 
 ## Prerequisite
 You need Nix in order to build the website generator
