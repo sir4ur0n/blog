@@ -63,7 +63,13 @@ In case you are curious, let's check the **type** of this `logInfo` function:
 ```
 > :type logInfo
 
-logInfo :: (IfStuck (IndexOf r (Found r Log)) (IfStuck r (TypeError ...) (Pure (TypeError ...))) NoErrorFcf, Find r Log, IndexOf r (Found r Log) ~ Log) => String -> Sem r ()
+logInfo :: 
+   (IfStuck 
+      (IndexOf r (Found r Log)) 
+      (IfStuck r (TypeError ...) 
+      (Pure (TypeError ...))) NoErrorFcf, 
+   Find r Log, IndexOf r (Found r Log) ~ Log) 
+ => String -> Sem r ()
 ```
 
 You know what? Let's pretend we never saw that. We don't actually need to understand this (I don't).
