@@ -19,10 +19,11 @@ main = do
       compile $ pandocCompiler >>= loadAndApplyTemplate "templates/default.html" defaultContext >>= relativizeUrls
     match "posts/*" $ do
       route $ setExtension "html"
-      compile $
-        pandocCompiler >>= loadAndApplyTemplate "templates/post.html" postCtx >>=
-        loadAndApplyTemplate "templates/default.html" postCtx >>=
-        relativizeUrls
+      compile $ pandocCompiler 
+        >>= loadAndApplyTemplate "templates/post.html" postCtx
+        >>= saveSnapshot "content"
+        >>= loadAndApplyTemplate "templates/default.html" postCtx
+        >>= relativizeUrls
     match "index.html" $ do
       route idRoute
       compile $ do
@@ -32,6 +33,22 @@ main = do
         getResourceBody >>= applyAsTemplate indexCtx >>= loadAndApplyTemplate "templates/default.html" indexCtx >>=
           relativizeUrls
     match "templates/*" $ compile templateCompiler
+    -- RSS, see https://jaspervdj.be/hakyll/tutorials/05-snapshots-feeds.html
+    create ["rss.xml"] $ do
+      route idRoute
+      compile $ do
+        let feedCtx = postCtx `mappend` bodyField "description"
+        posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "posts/*" "content"
+        renderRss myFeedConfiguration feedCtx posts
 
 postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y" `mappend` defaultContext
+
+myFeedConfiguration :: FeedConfiguration
+myFeedConfiguration = FeedConfiguration
+    { feedTitle       = "Julien Debon's blog"
+    , feedDescription = "Blog posts related to functional programming and code quality"
+    , feedAuthorName  = "Julien Debon"
+    , feedAuthorEmail = "julien.debon@pm.me"
+    , feedRoot        = "https://sir4ur0n.github.io"
+    }
