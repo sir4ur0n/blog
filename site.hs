@@ -40,6 +40,12 @@ main = do
         let feedCtx = postCtx `mappend` bodyField "description"
         posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "posts/*" "content"
         renderRss myFeedConfiguration feedCtx posts
+    create ["atom.xml"] $ do
+      route idRoute
+      compile $ do
+        let feedCtx = postCtx `mappend` bodyField "description"
+        posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "posts/*" "content"
+        renderAtom myFeedConfiguration feedCtx posts
 
 postCtx :: Context String
 postCtx = dateField "date" "%B %e, %Y" `mappend` defaultContext
