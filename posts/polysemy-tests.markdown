@@ -96,7 +96,9 @@ test_1and2is3 = TestCase $
 ### Step 3: Test effects too
 Rather than silencing those logs, maybe logging is part of our requirements. In such case, we should actually check that the function logs correctly!
 
-Let's replace our silencing interpreter with another one, that records all logs, so that we can check exactly what was logged. We will rely on another pre-existing Polysemy effect, namely `Polysemy.Writer`, which is the Polysemy equivalent of `Writer` or `WriterT`:
+Let's replace our silencing interpreter with another one, that records all logs, so that we can check exactly what was logged. We will rely on another pre-existing Polysemy effect, namely `Polysemy.Writer`, which is the Polysemy equivalent of `Writer` or `WriterT`. 
+
+Long story short, a `Writer a` effect allows you to *write* values of type `a` which will be appended together using `mappend` (thus the `Monoid` constraint). Note you can't read those values as long as you are in code under this effect. Then when interpreting this effect, the result will be a pair of the resulting written `a` and the value returned by the effectful code. For our needs, `a ~ [String]`, i.e. we record each log and we will get the list of all logged lines when interpreting this `Writer [String]` effect:
 
 ```haskell
 import Polysemy
