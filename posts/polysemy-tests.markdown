@@ -98,7 +98,7 @@ Rather than silencing those logs, maybe logging is part of our requirements. In 
 
 Let's replace our silencing interpreter with another one, that records all logs, so that we can check exactly what was logged. We will rely on another pre-existing Polysemy effect, namely `Polysemy.Writer`, which is the Polysemy equivalent of `Writer` or `WriterT`. 
 
-Long story short, a `Writer a` effect allows you to *write* values of type `a` which will be appended together using `mappend` (thus the `Monoid` constraint). Note you can't read those values as long as you are in code under this effect. Then when interpreting this effect, the result will be a pair of the resulting written `a` and the value returned by the effectful code. For our needs, `a ~ [String]`, i.e. we record each log and we will get the list of all logged lines when interpreting this `Writer [String]` effect:
+Long story short, a `Writer a` effect allows you to *write* values of type `a` which will be glued together using `mappend` (thus the `Monoid` constraint). Note you can't read those values as long as you are in code under this effect. Then when interpreting this effect, the result will be a pair of the resulting written `a` and the value returned by the effectful code. For our needs, `a ~ [String]`, i.e. we record each log and we will get the list of all logged lines when interpreting this `Writer [String]` effect:
 
 ```haskell
 import Polysemy
@@ -150,14 +150,14 @@ test_associative = \a b c ->
     last logsAB_then_C == last logsA_then_BC && resultAB_then_C == resultA_then_BC
 ```
 
+You can find the full code example on [my Github repo](https://github.com/Sir4ur0n/blog/tree/master/code-examples/src/PolysemyTestsLogging).
+
 This first example showed how to change the interpreter to mock/record the effect behavior, but a major part of mocking effects is to return a dummy value instead of executing the effect to retrieve the value (e.g. database access or environment variable).
 
 I think it's interesting to showcase another example where the effect action has a return value other than `()`.
 
-You can find the full code example on [my Github repo](https://github.com/Sir4ur0n/blog/tree/master/code-examples/src/PolysemyTestsLogging).
-
 ## Intermediary example: environment variables
-Let's consider the use case of enviroment variable access.
+Let's consider the use case of environment variable access.
 
 Many applications need to read some global configuration, often passed by Kubernetes/Rancher through environment variables or secret files. A database URL, the logging level, a port number, an API key, you name it.
 
@@ -170,6 +170,8 @@ data Configuration m a where
 
 makeSem ''Configuration
 ```
+
+No surprise here. When you `readConf`, you have to pass the parameter name to read, and you get back a `Maybe String` (`Nothing` if the parameter is not configured).
 
 ### The effect use in business code
 ```haskell
@@ -203,9 +205,9 @@ confToIO = interpret (\(ReadConf envVarName) -> embed $ lookupEnv envVarName)
 
 Now let's write a mock interpreter for our tests!
 
-As stated in introduction, mocking means that each test gets to decide the behavior of effects. In this particular case, it means the decision of how to convert the configuration name (e.g. `MINIMUM_AMOUNT`) to a value (of type `Maybe String`) is up to each test, not to the interpreter.
+As stated in introduction, mocking means that each test gets to decide the behavior of effects. In this particular case, it means the decision of how to transform the configuration name (e.g. `MINIMUM_AMOUNT`) to a value (of type `Maybe String`) is up to each test, not to the interpreter.
 
-Said differently, the interpreter should take as argument how to do this conversion.
+Said differently, the interpreter should take as argument how to do this transformation.
 
 In a functional language, it means: the interpreter should take as argument the function `String -> Maybe String`, and each test should pass such a function (the mock behavior).
 
