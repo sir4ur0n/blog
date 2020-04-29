@@ -73,7 +73,7 @@ Let's write another interpreter `logToSilence` for the `Log` effect, except this
 
 ```haskell
 logToSilence :: Sem (Log ': r) a -> Sem r a
-logToSilence = interpret (\(LogInfo stringToLog) -> pure ())
+logToSilence = interpret (\(LogInfo _) -> pure ())
 
 test_1and2is3 = TestCase $ do
   result <- runM . logToSilence $ myBusinessFunction 1 2
