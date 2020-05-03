@@ -94,7 +94,7 @@ myBusinessFunction m n = do
              " and " <> show n
   let result = m + n
   putStrLn $ "myBusinessFunction result is " <> show result
-  return result
+  pure result
 ```
 
 `IO` is too coarse, we want to replace its use with our shiny new effect. Fear not, my friend, this is as simple as:
@@ -106,7 +106,7 @@ myBusinessFunction m n = do
             " and " <> show n
   let result = m + n
   logInfo $ "myBusinessFunction result is " <> show result
-  return result
+  pure result
 ```
 
 The main changes are:

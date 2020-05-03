@@ -34,7 +34,7 @@ myBusinessFunction m n = do
             " and " <> show n
   let result = m + n
   logInfo $ "myBusinessFunction result is " <> show result
-  return result
+  pure result
 
 logToIO :: Member (Embed IO) r => Sem (Log ': r) a -> Sem r a
 logToIO = interpret (\(LogInfo stringToLog) -> embed $ putStrLn stringToLog)
