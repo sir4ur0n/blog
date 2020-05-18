@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.32.0.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a67c4d7261fb8310c0a0e4f017e58193ff967fbf31590cbf78103826fb1ce981
+-- hash: 83a703832141da4a0d08eeed11c479647b1e27c79fb0ee3c8c9736ac35b16c3a
 
 name:           code-examples
 version:        1.0.0.0
@@ -26,6 +26,8 @@ library
       PolysemyFirstExample.Business
       PolysemyFirstExample.Lib
       PolysemyFirstExample.Logging
+      PolysemyFullExample.Effect.Configuration
+      PolysemyFullExample.Effect.Logging
       PolysemyTestsConfiguration.Business
       PolysemyTestsConfiguration.BusinessSpec
       PolysemyTestsConfiguration.Configuration

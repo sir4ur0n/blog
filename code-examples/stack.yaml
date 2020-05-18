@@ -1,9 +1,0 @@
-resolver: lts-15.8
-
-packages:
-- .
-
-extra-deps:
-  - type-equality-1
-  - polysemy-plugin-0.2.4.0@sha256:374813a8a6d3fb0a09524b959cbce604186c7055983f9ca08948778cd7bfa485,3083
-  - ghc-tcplugins-extra-0.3.2@sha256:1bbfd4449c3669a31618ea0ebc5d00d980a53988daad3b6218bab5c8cdff268d,1687

@@ -1,0 +1,6 @@
+cradle:
+    stack:
+      - path: "./site.hs"
+        component: "blog:exe:blog"
+      - path: "./code-examples/src/"
+        component: "code-examples:lib"

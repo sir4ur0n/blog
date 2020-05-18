@@ -3,10 +3,24 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: polysemy-plugin-0.2.5.0@sha256:67e30be568a141b852aace1a60e180cb5060fbb2835365a81a3ea779536d6d35,2952
+    pantry-tree:
+      size: 1232
+      sha256: 5c90dac2eba48b4e337b302347c233ecaedb63e333641e094e718a548ac86711
+  original:
+    hackage: polysemy-plugin-0.2.5.0@sha256:67e30be568a141b852aace1a60e180cb5060fbb2835365a81a3ea779536d6d35,2952
+- completed:
+    hackage: ghc-tcplugins-extra-0.3.2@sha256:1bbfd4449c3669a31618ea0ebc5d00d980a53988daad3b6218bab5c8cdff268d,1687
+    pantry-tree:
+      size: 331
+      sha256: 4b16989344380c912e476dc232cc58264837b498e31a8bf16a17092ba6c1cfb9
+  original:
+    hackage: ghc-tcplugins-extra-0.3.2@sha256:1bbfd4449c3669a31618ea0ebc5d00d980a53988daad3b6218bab5c8cdff268d,1687
 snapshots:
 - completed:
-    size: 509471
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/12/26.yaml
-    sha256: 95f014df58d0679b1c4a2b7bf2b652b61da8d30de5f571abb0d59015ef678646
-  original: lts-12.26
+    size: 526548
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/5/16.yaml
+    sha256: 5109b8296889fc0d925989f6aa3a12e51cd2f21cb95ecd38b524fbc8309bda1e
+  original: nightly-2020-05-16
