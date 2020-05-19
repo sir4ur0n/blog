@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 83a703832141da4a0d08eeed11c479647b1e27c79fb0ee3c8c9736ac35b16c3a
+-- hash: 2f8f48f6f59ec49faf57488ad79e39860b1d7eeb15a48cf637bd3682d4864018
 
 name:           code-examples
 version:        1.0.0.0
@@ -26,8 +26,11 @@ library
       PolysemyFirstExample.Business
       PolysemyFirstExample.Lib
       PolysemyFirstExample.Logging
-      PolysemyFullExample.Effect.Configuration
+      PolysemyFullExample.Application
+      PolysemyFullExample.Controller
+      PolysemyFullExample.Effect.Database
       PolysemyFullExample.Effect.Logging
+      PolysemyFullExample.User
       PolysemyTestsConfiguration.Business
       PolysemyTestsConfiguration.BusinessSpec
       PolysemyTestsConfiguration.Configuration
@@ -41,12 +44,21 @@ library
       Paths_code_examples
   hs-source-dirs:
       src
-  default-extensions: DataKinds FlexibleContexts GADTs LambdaCase PolyKinds RankNTypes ScopedTypeVariables TemplateHaskell TypeApplications TypeOperators TypeFamilies
+  default-extensions: BangPatterns BinaryLiterals BlockArguments ConstraintKinds DataKinds DefaultSignatures DeriveDataTypeable DeriveFoldable DeriveFunctor DeriveGeneric DeriveTraversable DoAndIfThenElse DuplicateRecordFields EmptyDataDecls ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedLists OverloadedStrings PartialTypeSignatures PatternGuards PolyKinds QuasiQuotes RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TemplateHaskell TupleSections TypeApplications TypeFamilies TypeOperators TypeSynonymInstances ViewPatterns StrictData
   ghc-options: -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates -Wmissing-home-modules -Widentities -Wredundant-constraints -j -O0 -fplugin=Polysemy.Plugin -flate-specialise -fspecialise-aggressively
   build-depends:
       HUnit
     , QuickCheck
+    , aeson
     , base
+    , mtl
     , polysemy
     , polysemy-plugin
+    , servant
+    , servant-server
+    , sqlite-simple
+    , text
+    , wai
+    , wai-extra
+    , warp
   default-language: Haskell2010

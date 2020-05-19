@@ -4,3 +4,7 @@ cradle:
         component: "blog:exe:blog"
       - path: "./code-examples/src/"
         component: "code-examples:lib"
+
+dependencies:
+  - package.yaml
+  - code-examples/package.yaml

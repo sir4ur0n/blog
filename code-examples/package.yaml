@@ -1,25 +1,58 @@
-name:                code-examples
-version:             1.0.0.0
-github:              "Sir4ur0n/blog"
-license:             BSD3
-author:              "Julien Debon"
-maintainer:          "julien.debon@decathlon.com"
-copyright:           "WTFPL"
+name: code-examples
+version: 1.0.0.0
+github: "Sir4ur0n/blog"
+license: BSD3
+author: "Julien Debon"
+maintainer: "julien.debon@decathlon.com"
+copyright: "WTFPL"
 
-description:         Code examples of my blog <https://sir4ur0n.github.io>
+description: Code examples of my blog <https://sir4ur0n.github.io>
 
 default-extensions:
+  - BangPatterns
+  - BinaryLiterals
+  - BlockArguments
+  - ConstraintKinds
   - DataKinds
+  - DefaultSignatures
+  - DeriveDataTypeable
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DeriveTraversable
+  - DoAndIfThenElse
+  - DuplicateRecordFields
+  - EmptyDataDecls
+  - ExistentialQuantification
   - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
   - GADTs
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - KindSignatures
   - LambdaCase
+  - MultiParamTypeClasses
+  - MultiWayIf
+  - NamedFieldPuns
+  - OverloadedLists
+  - OverloadedStrings
+  - PartialTypeSignatures
+  - PatternGuards
   - PolyKinds
+  - QuasiQuotes
   - RankNTypes
+  - RecordWildCards
   - ScopedTypeVariables
+  - StandaloneDeriving
   - TemplateHaskell
+  - TupleSections
   - TypeApplications
-  - TypeOperators
   - TypeFamilies
+  - TypeOperators
+  - TypeSynonymInstances
+  - ViewPatterns
+  - StrictData
 
 ghc-options:
   - -Wall
@@ -40,10 +73,32 @@ ghc-options:
   - -fspecialise-aggressively
 
 dependencies:
+  # Basic dependencies
   - base
+  - text
+  - mtl
+
+  # Effect handling
   - polysemy
   - polysemy-plugin
+
+  # Web application
+  - servant
+  - servant-server
+  - wai
+  - wai-extra
+  - warp
+
+  # JSON support
+  - aeson
+
+  # Database
+  - sqlite-simple
+
+  # Unit tests
   - HUnit
+
+  # Property-based tests
   - QuickCheck
 
 library:
