@@ -77,6 +77,7 @@ dependencies:
   - base
   - text
   - mtl
+  - containers
 
   # Effect handling
   - polysemy

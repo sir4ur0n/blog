@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2f8f48f6f59ec49faf57488ad79e39860b1d7eeb15a48cf637bd3682d4864018
+-- hash: bb0147fa2ae92746b32cac2d2974c4394fa784087755060ff852efe9e6863107
 
 name:           code-examples
 version:        1.0.0.0
@@ -40,6 +40,7 @@ library
       PolysemyTestsLogging.Lib
       PolysemyTestsLogging.Logging
       PolysemyTestsLogging.LoggingSpec
+      TreesThatGrow.Domain
   other-modules:
       Paths_code_examples
   hs-source-dirs:
@@ -51,6 +52,7 @@ library
     , QuickCheck
     , aeson
     , base
+    , containers
     , mtl
     , polysemy
     , polysemy-plugin

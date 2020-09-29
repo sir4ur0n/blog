@@ -23,3 +23,6 @@ _site/
 
 ### Nix
 result
+
+### VS Code
+.vscode
