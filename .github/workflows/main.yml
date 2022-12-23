@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: cachix/install-nix-action@v6
+      - uses: cachix/install-nix-action@v18
       - run: nix-build
       - run: result/bin/blog build
-      - name: 'Run peaceiris/actions-gh-pages@v2.5.0: deploy to Github pages'
-        uses: peaceiris/actions-gh-pages@v2.5.0
+      - name: 'Deploy to Github pages'
+        uses: peaceiris/actions-gh-pages@v3.9.0
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: master
