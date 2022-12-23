@@ -15,9 +15,9 @@ jobs:
       - run: result/bin/blog build
       - name: 'Deploy to Github pages'
         uses: peaceiris/actions-gh-pages@v3.9.0
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: _site
-          EXTERNAL_REPOSITORY: sir4ur0n/sir4ur0n.github.io
-        if: github.ref == 'refs/heads/master'
+        if: ${{ github.ref == 'refs/heads/master' }}
+        with:
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_branch: master
+          publish_dir: _site
+          external_repository: sir4ur0n/sir4ur0n.github.io
