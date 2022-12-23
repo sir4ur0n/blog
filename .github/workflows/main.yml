@@ -17,7 +17,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3.9.0
         if: ${{ github.ref == 'refs/heads/master' }}
         with:
-          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_branch: master
           publish_dir: _site
           external_repository: sir4ur0n/sir4ur0n.github.io
