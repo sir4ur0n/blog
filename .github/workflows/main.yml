@@ -9,6 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: cachix/install-nix-action@v18
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
       - run: nix-build
       - run: result/bin/blog build
       - name: 'Deploy to Github pages'
